@@ -1,6 +1,15 @@
 .construction-icon {
   margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.marshall-logo {
+  width: 200px;
+  height: auto;
   animation: pulse 2s ease-in-out infinite;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
 }
 
 @keyframes pulse {
@@ -10,15 +19,14 @@
     opacity: 1;
   }
   50% {
-    transform: scale(1.05);
-    opacity: 0.9;
+    transform: scale(1.1);
+    opacity: 0.95;
   }
 }
 
 @media (max-width: 768px) {
-  .construction-icon svg {
-    width: 100px;
-    height: 100px;
+  .marshall-logo {
+    width: 150px;
   }
 }
 
