@@ -359,12 +359,64 @@ lp-marshall/
 
 ---
 
+## 🌐 Passo 7: Configurar Domínio e SSL (Opcional)
+
+Para configurar o domínio `marshalltds.com` com certificado SSL:
+
+### 7.1 Configurar DNS na GoDaddy
+
+1. **Registro A para o domínio principal**:
+   - Tipo: `A`
+   - Nome: `@`
+   - Valor: `72.61.223.230`
+   - TTL: `600` (ou padrão)
+
+2. **Registro A para www** (recomendado):
+   - Tipo: `A`
+   - Nome: `www`
+   - Valor: `72.61.223.230`
+   - TTL: `600` (ou padrão)
+
+   **OU** usar CNAME:
+   - Tipo: `CNAME`
+   - Nome: `www`
+   - Valor: `@` (ou `marshalltds.com`)
+
+### 7.2 Aguardar Propagação DNS
+
+Aguarde alguns minutos e verifique:
+
+```bash
+nslookup marshalltds.com
+nslookup www.marshalltds.com
+```
+
+Ambos devem retornar: `72.61.223.230`
+
+### 7.3 Executar Script de Configuração SSL
+
+```bash
+cd /var/www/lp-marshall
+sudo ./scripts/setup-nginx-ssl.sh
+```
+
+O script irá:
+- Instalar Nginx e Certbot (se necessário)
+- Configurar proxy reverso para a porta 5174
+- Obter certificado SSL do Let's Encrypt
+- Configurar redirecionamento HTTP → HTTPS
+
+**Documentação completa**: Veja `scripts/NGINX_SSL_SETUP.md` para instruções detalhadas.
+
+---
+
 ## 🎉 Pronto!
 
 Agora você tem um sistema de deploy automatizado configurado! 
 
 - Push para `main` → Deploy automático na porta 5174
 - Push para `homolog` → Sem deploy automático (use `./scripts/deploy.sh homolog` para deploy manual)
+- Domínio configurado → `https://marshalltds.com` e `https://www.marshalltds.com`
 
 Para dúvidas ou problemas, consulte a seção de Troubleshooting acima.
 
